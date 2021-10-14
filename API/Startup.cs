@@ -1,4 +1,5 @@
 using APPLICATION.Activities;
+using APPLICATION.Core;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,7 +35,7 @@ namespace API
             });
             
             services.AddMediatR(typeof(List.Handler).Assembly);
-
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
             //In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
