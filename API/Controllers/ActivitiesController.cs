@@ -16,23 +16,31 @@ namespace API.Controllers
     [ApiController]
     public class ActivitiesController : BaseApiController
     {
-        private readonly IMediator mediator;
-
-        public ActivitiesController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
 
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await mediator.Send(new List.Query());
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            return await context.Activities.FindAsync(id);
+            return await Mediator.Send(new Detail.Query { Id = id });
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SaveActivity(Activity activity)
+        {
+            return Ok(await Mediator.Send(new Create.Command { activity = activity }));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateActivity(Guid id, Activity activity)
+        {
+            activity.Id = id;
+            return Ok(await Mediator.Send(new Edit.Command { activity = activity }));
+        }
+
     }
 }
