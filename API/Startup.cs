@@ -1,3 +1,5 @@
+using APPLICATION.Activities;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +32,11 @@ namespace API
             {
                 option.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
-           //In production, the React files will be served from this directory
+            
+            services.AddMediatR(typeof(List.Handler).Assembly);
+
+
+            //In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";

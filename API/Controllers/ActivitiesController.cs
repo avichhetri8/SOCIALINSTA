@@ -1,4 +1,6 @@
-﻿using DOMAIN;
+﻿using APPLICATION.Activities;
+using DOMAIN;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,17 +16,17 @@ namespace API.Controllers
     [ApiController]
     public class ActivitiesController : BaseApiController
     {
-        private readonly DataContext context;
+        private readonly IMediator mediator;
 
-        public ActivitiesController(DataContext context)
+        public ActivitiesController(IMediator mediator)
         {
-            this.context = context;
+            this.mediator = mediator;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await context.Activities.ToListAsync();
+            return await mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
