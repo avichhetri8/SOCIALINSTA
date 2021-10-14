@@ -22,7 +22,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Activity>> GetActivities()
+        public async Task<ActionResult<List<Activity>>> GetActivities()
         {
             return await context.Activities.ToListAsync();
         }
