@@ -7,7 +7,7 @@ interface Props {
     activities: IActivity[]
 }
 
-export default function ActivityList({ activities }: Props) {
+export const ActivityList = ({ activities }: Props) =>  {
 
     const DisplayList = () => {
         return (
