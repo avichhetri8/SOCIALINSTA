@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Container, Header, List } from 'semantic-ui-react';
 import { IActivity } from '../models/Activity';
 import { NavBar } from './NavBar';
 import { ActivityDashboard } from '../../feature/activities/dashboard/ActivityDashboard';
 import { v4 as uuid } from 'uuid';
+import agent from '../api/agent';
 
 
 const App = () => {
@@ -15,9 +15,10 @@ const App = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get('/api/activities').then((response) => {
+            await agent.Activities.list().then((response) => {
                 /* DO STUFF WHEN THE CALLS SUCCEEDS */
-                setActivities(response.data);
+                console.log("api",response)
+                setActivities(response);
             }).catch((e) => {
                 /* HANDLE THE ERROR (e) */
             });
