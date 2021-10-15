@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Header, List } from 'semantic-ui-react';
+import { Button, Container, Header, List } from 'semantic-ui-react';
 import { IActivity } from '../models/Activity';
 import { NavBar } from './NavBar';
 import { ActivityDashboard } from '../../feature/activities/dashboard/ActivityDashboard';
@@ -7,9 +7,10 @@ import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
 import { Loading } from './Loading';
 import { useStore } from '../stores/store';
+import { observer } from 'mobx-react-lite';
 
 
-const App = () => {
+const  App = () => {
     const { activityStore } = useStore();
 
     const [activities, setActivities] = useState<IActivity[]>([]);
@@ -94,6 +95,7 @@ const App = () => {
             <NavBar openForm={handleFormOpen} />
             <Container style={{ marginTop: '5em' }}>
                 <h3>{activityStore.title}</h3>
+                <Button onClick={activityStore.setitle} content="Add !"/>
                 {activities.length > 0 &&
                     <ActivityDashboard
                         activities={activities}
@@ -114,4 +116,4 @@ const App = () => {
     );
 }
 
-export default App;
+export default observer(App);

@@ -1,4 +1,4 @@
-﻿import { observable } from 'mobx';
+﻿import { action, observable } from 'mobx';
 import { makeObservable } from 'mobx';
 
 export class ActivityStore{
@@ -6,7 +6,12 @@ export class ActivityStore{
 
     constructor(){
         makeObservable(this, {
-            title: observable
+            title: observable,
+            setitle: action
         })
+    }
+
+    setitle = () => {
+        this.title += "!";
     }
 }
