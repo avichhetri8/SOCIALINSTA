@@ -6,9 +6,10 @@ interface Props {
     activity: IActivity;
     cancelSelectActivity: () => void;
     openForm: (id: string) => void;
+   
 }
 
-export const ActivityDetail = ({ activity, cancelSelectActivity, openForm }: Props) => {
+export const ActivityDetail = ({ activity, cancelSelectActivity, openForm}: Props) => {
 
 
     return (
