@@ -4,10 +4,13 @@ import { Container, Header, List } from 'semantic-ui-react';
 import { IActivity } from '../models/Activity';
 import { NavBar } from './NavBar';
 import { ActivityDashboard } from '../../feature/activities/dashboard/ActivityDashboard';
+import { v4 as uuid } from 'uuid';
+
 
 const App = () => {
     const [activities, setActivities] = useState<IActivity[]>([]);
     const [selectedActivity, setSelectedActivity] = useState<IActivity | undefined>(undefined);
+    const [editMode, setEditMode] = useState(false);
 
 
     useEffect(() => {
@@ -30,10 +33,30 @@ const App = () => {
         setSelectedActivity(undefined);
     }
 
+    const handleFormOpen = (id?: string) => {
+        id ? handleSelectActivity(id) : cancleActivity();
+        setEditMode(true);
+    }
+
+    const handleFormClose = () => {
+        setEditMode(false);
+    }
+
+    const handleCreateOrEditActivity = (activity: IActivity) => {
+        activity.id
+            ? setActivities([...activities.filter(x => x.id !== activity.id), activity])
+            : setActivities([...activities, { ...activity, id: uuid() }]);
+        setEditMode(false);
+        setSelectedActivity(activity);
+    }
+
+    function handleDeleteActivity(id: string) {
+        setActivities([...activities.filter(x => x.id !== id)])
+    }
 
     return (
         <>
-            <NavBar />
+            <NavBar openForm={handleFormOpen} />
             <Container style={{ 'margin-top': '5em' }}>
                 {activities.length > 0 &&
                     <ActivityDashboard
@@ -41,7 +64,11 @@ const App = () => {
                         selectedActivity={selectedActivity}
                         selectActivity={handleSelectActivity}
                         cancelSelectActivity={cancleActivity}
-
+                        editMode={editMode}
+                        openForm={handleFormOpen}
+                        closeForm={handleFormClose}
+                        createOrEdit={handleCreateOrEditActivity}
+                        deleteActivity={handleDeleteActivity}
                     />
                 }
 
