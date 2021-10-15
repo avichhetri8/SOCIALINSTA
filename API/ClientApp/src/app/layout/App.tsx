@@ -22,23 +22,10 @@ const  App = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await agent.Activities.list().then((response) => {
-                /* DO STUFF WHEN THE CALLS SUCCEEDS */
-                let activities: IActivity[] = [];
-                response.forEach(activity => {
-                    console.log(activity.date)
-                    activity.date = activity.date.split('T')[0];
-                    console.log(activity.date)
-                    activities.push(activity)
-                })
-                setActivities(response);
-                setLoading(false)
-            }).catch((e) => {
-                /* HANDLE THE ERROR (e) */
-            });
+            activityStore.loadActivities();
         }
         fetchData();
-    }, [])
+    }, [activityStore])
 
     const handleSelectActivity = (id: string) => {
         setSelectedActivity(activities.find(x => x.id === id));
@@ -88,17 +75,16 @@ const  App = () => {
     }
 
 
-    if (loading) return <Loading content='Loading app' />
+    if (activityStore.loadingInitial) return <Loading content='Loading app' />
 
     return (
         <>
             <NavBar openForm={handleFormOpen} />
             <Container style={{ marginTop: '5em' }}>
-                <h3>{activityStore.title}</h3>
-                <Button onClick={activityStore.setitle} content="Add !"/>
-                {activities.length > 0 &&
+               
+                {activityStore.activities.length > 0 &&
                     <ActivityDashboard
-                        activities={activities}
+                        activities={activityStore.activities}
                         selectedActivity={selectedActivity}
                         selectActivity={handleSelectActivity}
                         cancelSelectActivity={cancleActivity}
@@ -110,6 +96,7 @@ const  App = () => {
                         submitting={submitting}
                     />
                 }
+                {console.log(activityStore.activities)}
 
             </Container>
         </>
