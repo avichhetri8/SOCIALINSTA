@@ -1,17 +1,14 @@
-﻿import React, { ChangeEvent, useState } from 'react';
+﻿import { observer } from 'mobx-react-lite';
+import React, { ChangeEvent, useState } from 'react';
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { IActivity } from '../../../app/models/Activity';
 import { useStore } from '../../../app/stores/store';
 
-interface Props {
-    activity: IActivity | undefined;
-    createOrEdit: (activity: IActivity) => void;
-    submitting: boolean;
-}
 
-export const ActivityForm = ({ activity: selectedActivity, createOrEdit, submitting }: Props) =>{
+export const ActivityForm = observer(() =>{
     const { activityStore } = useStore();
-    const { closeForm } = activityStore;
+    const { closeForm, selectedActivity, createActivity, updateActivity, loading } = activityStore;
+
     const initialState = selectedActivity ??  {
         id: '',
         title: '',
@@ -26,7 +23,7 @@ export const ActivityForm = ({ activity: selectedActivity, createOrEdit, submitt
 
 
     const handleSubmit = () => {
-        createOrEdit(activity);
+        activity.id ? updateActivity(activity) : createActivity(activity);
     }
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,10 +40,11 @@ export const ActivityForm = ({ activity: selectedActivity, createOrEdit, submitt
                 <Form.Input type='date' placeholder='Date' value={activity.date} name='date' onChange={handleInputChange}/>
                 <Form.Input placeholder='City' value={activity.city} name='city' onChange={handleInputChange}/>
                 <Form.Input placeholder='Venue' value={activity.venue} name='venue' onChange={handleInputChange} />
-                <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
+                <Button loading={loading} floated='right' positive type='submit' content='Submit' />
 
                 <Button onClick={() => closeForm} floated='right' type='button' content='Cancel' />
             </Form>
         </Segment>
     )
 }
+    )

@@ -1,13 +1,9 @@
-﻿import React, { Component } from 'react'
+﻿import { observer } from 'mobx-react-lite';
+import React, { Component } from 'react'
 import { Button, Container, Menu } from 'semantic-ui-react';
 import { useStore } from '../stores/store';
 
-
-interface Props {
-    openForm: () => void;
-}
-
-export const NavBar = () => {
+export const NavBar = observer(() => {
     const { activityStore } = useStore();
 
     return (
@@ -21,10 +17,10 @@ export const NavBar = () => {
                 <Menu.Item name='Activities'>
                 </Menu.Item>
                 <Menu.Item >
-                    <Button positive content='Create Activity' onClick={()=>activityStore.openForm} />
+                    <Button positive content='Create Activity' onClick={()=>activityStore.openForm()} />
                 </Menu.Item>
             </Container>
         </Menu>
     )
 
-}
+})

@@ -14,9 +14,6 @@ const  App = () => {
     const { activityStore } = useStore();
 
     const [activities, setActivities] = useState<IActivity[]>([]);
-    const [selectedActivity, setSelectedActivity] = useState<IActivity | undefined>(undefined);
-    const [editMode, setEditMode] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
 
 
@@ -27,27 +24,7 @@ const  App = () => {
         fetchData();
     }, [activityStore])
 
-    const handleCreateOrEditActivity = (activity: IActivity) => {
-        setSubmitting(true)
-        if (activity.id) {
-            agent.Activities.update(activity).then(response => {
-                setActivities([...activities.filter(x => x.id !== activity.id), activity])
-                setSelectedActivity(activity);
-                setEditMode(false)
-                setSubmitting(false)
-            })
-        } else {
-            agent.Activities.create(activity).then(response => {
-                setActivities([...activities.filter(x => x.id !== activity.id), activity])
-                setSelectedActivity(activity);
-                setEditMode(false)
-                setSubmitting(false)
-            })
-
-        }
-    }
-
-   
+    
     const handleDeleteActivity= (id: string) => {
         setSubmitting(true);
         agent.Activities.delete(id).then(() => {
@@ -68,7 +45,6 @@ const  App = () => {
                 {activityStore.activities.length > 0 &&
                     <ActivityDashboard
                         activities={activityStore.activities}
-                        createOrEdit={handleCreateOrEditActivity}
                         deleteActivity={handleDeleteActivity}
                         submitting={submitting}
                     />
