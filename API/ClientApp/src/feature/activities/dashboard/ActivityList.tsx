@@ -8,7 +8,7 @@ import { useStore } from '../../../app/stores/store';
 export const ActivityList = observer(() => {
     const [target, setTarget] = useState('');
     const { activityStore } = useStore();
-    const { activities, selectActivity, deleteActivity, loading :submitting } = activityStore;
+    const { activitiesByDate : activities, selectActivity, deleteActivity, loading :submitting } = activityStore;
 
     const handleActivityDelete = (e: SyntheticEvent<HTMLButtonElement>, id: string) => {
         setTarget(e.currentTarget.name);

@@ -26,7 +26,7 @@ const  App = () => {
             <NavBar />
             <Container style={{ marginTop: '5em' }}>
                
-                {activityStore.activities.length > 0 &&
+                {activityStore.activitiesByDate.length > 0 &&
                     <ActivityDashboard />
                 }
                 {console.log(activityStore)}
