@@ -7,7 +7,9 @@ export const NavBar = () => {
         <Menu inverted fixed='top'>
             <Container>
                 <Menu.Item header>
-                    SocialInsta
+                    <img src='assets/logo.png' alt="logo" />
+
+                    SocialInsta 
                 </Menu.Item>
                 <Menu.Item name='Activities'>
                 </Menu.Item>

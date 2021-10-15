@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\public\assets\" />
-    <Folder Include="ClientApp\src\feature\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
