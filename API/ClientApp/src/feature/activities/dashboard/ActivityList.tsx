@@ -4,10 +4,12 @@ import { IActivity } from '../../../app/models/Activity';
 
 
 interface Props {
-    activities: IActivity[]
+    activities: IActivity[];
+    selectActivity: (id: string) => void;
+
 }
 
-export const ActivityList = ({ activities }: Props) =>  {
+export const ActivityList = ({ activities, selectActivity }: Props) =>  {
 
     const DisplayList = () => {
         return (
@@ -22,7 +24,7 @@ export const ActivityList = ({ activities }: Props) =>  {
                                 {activity.description}
                             </Item.Description>
                             <Item.Extra>
-                                <Button floated='right' color='blue'>Action</Button>
+                                <Button floated='right' color='blue' onClick={()=>selectActivity(activity.id)}>Action</Button>
                                 <Label basic content={activity.category}></Label>
                             </Item.Extra>
                         </Item.Content>
