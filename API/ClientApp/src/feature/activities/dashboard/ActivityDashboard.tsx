@@ -7,15 +7,8 @@ import { ActivityForm } from '../form/ActivityForm';
 import { ActivityList } from './ActivityList';
 import { observer } from 'mobx-react-lite';
 
-interface Props {
-    activities: IActivity[];
-    deleteActivity: (id: string) => void;
-    submitting: boolean;
-}
 
-export const ActivityDashboard = observer(({
-    activities,
-    deleteActivity, submitting }: Props) => {
+export const ActivityDashboard = observer(() => {
 
     const { activityStore } = useStore();
     const { editMode, selectedActivity, createActivity, updateActivity } = activityStore;
@@ -23,10 +16,7 @@ export const ActivityDashboard = observer(({
     return (
         <Grid>
             <Grid.Column width='10'>
-                <ActivityList
-                    activities={activities}
-                    deleteActivity={deleteActivity}
-                    submitting={submitting} />
+                <ActivityList />
             </Grid.Column>
 
             <Grid.Column width='6'>
