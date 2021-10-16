@@ -11,8 +11,8 @@ export const ActivityList = observer(() => {
     const { activityStore } = useStore();
     const { activitiesByDate : activities, deleteActivity, loading :submitting } = activityStore;
 
-    const handleActivityDelete = (e: SyntheticEvent<HTMLButtonElement>, id: string) => {
-        setTarget(e.currentTarget.name);
+    const handleActivityDelete = (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
+        setTarget(event.currentTarget.name);
         deleteActivity(id);
     }
     const DisplayList = () => {

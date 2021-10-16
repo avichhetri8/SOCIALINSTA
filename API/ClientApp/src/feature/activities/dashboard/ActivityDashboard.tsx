@@ -9,16 +9,13 @@ import { Loading } from '../../../app/layout/Loading';
 export const ActivityDashboard = observer(() => {
 
     const { activityStore } = useStore();
-   
+    const { loadActivities, activityRegistry } = activityStore;
+
     useEffect(() => {
-        const fetchData = async () => {
-            activityStore.loadActivities();
-        }
-        fetchData();
-    }, [activityStore])
+        if (activityRegistry.size <= 1) loadActivities();
+    }, [activityRegistry.size, loadActivities])
 
-
-
+    
     if (activityStore.loadingInitial) return <Loading content='Loading app' />
 
 
