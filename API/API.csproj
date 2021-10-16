@@ -21,17 +21,9 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="ClientApp\src\feature\activities\details\**" />
     <Content Remove="$(SpaRoot)**" />
-    <Content Remove="ClientApp\src\feature\activities\details\**" />
-    <EmbeddedResource Remove="ClientApp\src\feature\activities\details\**" />
     <None Remove="$(SpaRoot)**" />
-    <None Remove="ClientApp\src\feature\activities\details\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ClientApp\src\feature\activities\details\ActivityDetail.tsx" />
   </ItemGroup>
 
   <ItemGroup>
