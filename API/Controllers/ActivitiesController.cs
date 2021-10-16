@@ -20,38 +20,34 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult<List<Activity>>(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            var activty = await Mediator.Send(new Detail.Query { Id = id });
-            if (activty.IsSuccess && activty.Value != null)
-                return Ok(activty);
-            else if (activty.IsSuccess && activty.Value == null) 
-                return NotFound();
-            else
-                return BadRequest();
+            return HandleResult<Activity>(await Mediator.Send(new Detail.Query { Id = id }));
+
         }
 
         [HttpPost]
         public async Task<ActionResult> SaveActivity(Activity activity)
         {
-            return Ok(await Mediator.Send(new Create.Command { activity = activity }));
+            return HandleResult(await Mediator.Send(new Create.Command { activity = activity }));
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateActivity(Guid id, Activity activity)
         {
             activity.Id = id;
-            return Ok(await Mediator.Send(new Edit.Command { activity = activity }));
+            return HandleResult(await Mediator.Send(new Edit.Command { activity = activity }));
+
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteActivity(Guid id)
         {
-            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
 
 
