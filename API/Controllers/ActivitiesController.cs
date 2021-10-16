@@ -27,8 +27,12 @@ namespace API.Controllers
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
             var activty = await Mediator.Send(new Detail.Query { Id = id });
-            if (activty == null) return NotFound();
-            return activty;
+            if (activty.IsSuccess && activty.Value != null)
+                return Ok(activty);
+            else if (activty.IsSuccess && activty.Value == null) 
+                return NotFound();
+            else
+                return BadRequest();
         }
 
         [HttpPost]
