@@ -18,6 +18,16 @@ export default class ActivityStore {
             Date.parse(a.date) - Date.parse(b.date));
     }
 
+    get groupedActivities() {
+        return Object.entries(
+            this.activitiesByDate.reduce((activities, activity) => {
+                const date = activity.date;
+                activities[date] = activities[date] ? [...activities[date], activity] : [activity];
+                return activities;
+            }, {} as { [key: string]: IActivity[] })
+        )
+    }
+
     loadActivities = async () => {
         this.loadingInitial = true;
         try {
@@ -92,18 +102,26 @@ export default class ActivityStore {
 */
 
     createActivity = async (activity: IActivity) => {
-        this.setLoadingInitial(true)
+        this.loading = true;
         try {
-             await agent.Activities.create(activity);
-            this.activityRegistry.set(activity.id, activity);
+            await agent.Activities.create(activity);
+            runInAction(() => {
+                this.activityRegistry.set(activity.id, activity);
+                this.selectedActivity = activity;
+                this.editMode = false;
+                this.loading = false;
+            })
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
         }
-        this.setLoadingInitial(false)
     }
 
     updateActivity = async (activity: IActivity) => {
-        this.setLoadingInitial(true)
+       
+        this.loading = true;
         try {
             await agent.Activities.update(activity);
             this.activityRegistry.set(activity.id, activity);
@@ -112,7 +130,7 @@ export default class ActivityStore {
         } catch (error) {
             console.log(error)
         }
-        this.setLoadingInitial(false)
+        this.loading = false
     }
 
     deleteActivity = async (id: string) => {

@@ -1,6 +1,7 @@
-﻿import React, { SyntheticEvent, useState } from 'react';
+﻿import { observer } from 'mobx-react-lite';
+import React, { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Item, Label } from 'semantic-ui-react';
+import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { IActivity } from '../../../app/models/Activity';
 import { useStore } from '../../../app/stores/store';
 
@@ -8,7 +9,7 @@ interface Props {
     activity: IActivity;
 }
 
-export const ActivityListItem = ({ activity }: Props) => {
+export const ActivityListItem = observer(({ activity }: Props) => {
     const [target, setTarget] = useState('');
     const { activityStore } = useStore();
     const { activitiesByDate: activities, deleteActivity, loading: submitting } = activityStore;
@@ -20,28 +21,32 @@ export const ActivityListItem = ({ activity }: Props) => {
 
     return (
         <>
-            <Item key={activity.id}>
-                <Item.Content>
-                    <Item.Header as='a'>{activity.title}</Item.Header>
-                    <Item.Meta>{activity.date}</Item.Meta>
-                    <Item.Description>
-                        {activity.description}
-                    </Item.Description>
-                    <Item.Extra>
-                        <Label basic content={activity.category}></Label>
-                        <Button floated='right' color='red'
-                            loading={submitting && target === activity.id}
-                            name={activity.id}
-                            onClick={(e) => handleActivityDelete(e, activity.id)}
-                        >Delete</Button>
-                        <Button floated='right'
-                            color='blue' as={Link} to={`/activities/${activity.id}`}
-                        >View</Button>
+            <Segment>
+                <Item.Group divided>
+                    <Item key={activity.id}>
+                        <Item.Content>
+                            <Item.Header as='a'>{activity.title}</Item.Header>
+                            <Item.Meta>{activity.date}</Item.Meta>
+                            <Item.Description>
+                                {activity.description}
+                            </Item.Description>
+                            <Item.Extra>
+                                <Label basic content={activity.category}></Label>
+                                <Button floated='right' color='red'
+                                    loading={submitting && target === activity.id}
+                                    name={activity.id}
+                                    onClick={(e) => handleActivityDelete(e, activity.id)}
+                                >Delete</Button>
+                                <Button floated='right'
+                                    color='blue' as={Link} to={`/activities/${activity.id}`}
+                                >View</Button>
 
-                    </Item.Extra>
-                </Item.Content>
-            </Item>
+                            </Item.Extra>
+                        </Item.Content>
+                    </Item>
 
+                </Item.Group >
+            </Segment>
         </>
     )
-}
+})
