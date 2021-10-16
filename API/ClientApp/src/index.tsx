@@ -5,6 +5,8 @@ import 'semantic-ui-css/semantic.min.css';
 import App from './app/layout/App';
 import { store, StoreContext } from './app/stores/store';
 import { BrowserRouter } from 'react-router-dom';
+import 'react-calendar/dist/Calendar.css'
+import '../src/app/layout/Styles.css'
 
 ReactDOM.render(
     <StoreContext.Provider value={store}>
