@@ -1,17 +1,26 @@
-﻿import React from 'react';
-import { Grid, List } from 'semantic-ui-react';
-import { IActivity } from '../../../app/models/Activity';
+﻿import React, { useEffect } from 'react';
+import { Grid } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
-import { ActivityDetail } from '../details/ActivityDetail';
-import { ActivityForm } from '../form/ActivityForm';
 import { ActivityList } from './ActivityList';
 import { observer } from 'mobx-react-lite';
+import { Loading } from '../../../app/layout/Loading';
 
 
 export const ActivityDashboard = observer(() => {
 
     const { activityStore } = useStore();
-    const { editMode, selectedActivity, createActivity, updateActivity } = activityStore;
+   
+    useEffect(() => {
+        const fetchData = async () => {
+            activityStore.loadActivities();
+        }
+        fetchData();
+    }, [activityStore])
+
+
+
+    if (activityStore.loadingInitial) return <Loading content='Loading app' />
+
 
     return (
         <Grid>
@@ -20,15 +29,19 @@ export const ActivityDashboard = observer(() => {
             </Grid.Column>
 
             <Grid.Column width='6'>
-                {selectedActivity &&
-                    <>
-                        <ActivityDetail />
-                    </>
-                }
-                {editMode &&
-                    <ActivityForm />
-                }
+               <h3>Activity Filter</h3>
             </Grid.Column>
+
+            {/*<Grid.Column width='6'>*/}
+            {/*    {selectedActivity &&*/}
+            {/*        <>*/}
+            {/*            <ActivityDetail />*/}
+            {/*        </>*/}
+            {/*    }*/}
+            {/*    {editMode &&*/}
+            {/*        <ActivityForm />*/}
+            {/*    }*/}
+            {/*</Grid.Column>*/}
 
         </Grid>
     )

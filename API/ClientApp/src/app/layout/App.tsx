@@ -2,34 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Button, Container, Header, List } from 'semantic-ui-react';
 import { NavBar } from './NavBar';
 import { ActivityDashboard } from '../../feature/activities/dashboard/ActivityDashboard';
-import { Loading } from './Loading';
-import { useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
+import { Route } from 'react-router-dom';
+import { HomePage } from '../../feature/home/HomePage';
+import { ActivityForm } from '../../feature/activities/form/ActivityForm';
+import { ActivityDetail } from '../../feature/activities/details/ActivityDetail';
 
 
-const  App = () => {
-    const { activityStore } = useStore();
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            activityStore.loadActivities();
-        }
-        fetchData();
-    }, [activityStore])
-
-    
-   
-    if (activityStore.loadingInitial) return <Loading content='Loading app' />
+const App = () => {
 
     return (
         <>
             <NavBar />
             <Container style={{ marginTop: '5em' }}>
-               
-                {activityStore.activitiesByDate.length > 0 &&
-                    <ActivityDashboard />
-                }
-                {console.log(activityStore)}
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/activities/" component={ActivityDashboard} />
+                <Route path="/activities/:id" component={ActivityDetail} />
+                <Route path={['/createActivity', '/manage/:id']} component={ActivityForm} />
 
             </Container>
         </>
