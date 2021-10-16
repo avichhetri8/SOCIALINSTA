@@ -1,7 +1,6 @@
 ﻿import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { IActivity } from '../models/Activity';
-import { v4 as uuid } from 'uuid';
 
 export default class ActivityStore {
     activityRegistry = new Map<string, IActivity>();
@@ -95,8 +94,7 @@ export default class ActivityStore {
     createActivity = async (activity: IActivity) => {
         this.setLoadingInitial(true)
         try {
-            activity.id = uuid();
-            await agent.Activities.create(activity);
+             await agent.Activities.create(activity);
             this.activityRegistry.set(activity.id, activity);
         } catch (error) {
             console.log(error)

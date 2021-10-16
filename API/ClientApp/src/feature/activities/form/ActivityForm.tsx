@@ -1,13 +1,13 @@
 ﻿import { observer } from 'mobx-react-lite';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Button, Form, Segment } from 'semantic-ui-react';
-import { Loading } from '../../../app/layout/Loading';
-import { IActivity } from '../../../app/models/Activity';
 import { useStore } from '../../../app/stores/store';
-
+import { v4 as uuid } from 'uuid';
+import { Loading } from '../../../app/layout/Loading';
 
 export const ActivityForm = observer(() => {
+    const history = useHistory();
     const { activityStore } = useStore();
     const { loadActivity, createActivity, updateActivity, loading, loadingInitial } = activityStore;
     const { id } = useParams<{ id: string }>();
@@ -27,7 +27,15 @@ export const ActivityForm = observer(() => {
 
 
     const handleSubmit = () => {
-        activity.id ? updateActivity(activity) : createActivity(activity);
+        if (activity.id.length === 0) {
+            let newActivity = {
+                ...activity,
+                id: uuid()
+            };
+            createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`))
+        } else {
+            updateActivity(activity).then(() => history.push(`/activities/${activity.id}`))
+        }
     }
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,7 +43,8 @@ export const ActivityForm = observer(() => {
         setActivity({ ...activity, [name]: value })
     }
 
-    
+    if (loadingInitial) return <Loading content='Loading activity...' />
+
     return (
         <Segment clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
