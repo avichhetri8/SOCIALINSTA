@@ -1,11 +1,13 @@
 ﻿import { observer } from 'mobx-react-lite';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Button, Segment } from 'semantic-ui-react';
+import { Button, FormField, Label, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
 import { Loading } from '../../../app/layout/Loading';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { MyTextInput } from '../../../app/common/form/MyTextInput';
 
 export const ActivityForm = observer(() => {
     const history = useHistory();
@@ -25,6 +27,16 @@ export const ActivityForm = observer(() => {
     useEffect(() => {
         if (id) loadActivity(id).then(activity => setActivity(activity!))
     }, [id, loadActivity]);
+
+
+    const validationSchema = Yup.object({
+        title: Yup.string().required('The activity title is required'),
+        description: Yup.string().required('The activity description is required'),
+        category: Yup.string().required(),
+        date: Yup.string().required('Date is required').nullable(),
+        venue: Yup.string().required(),
+        city: Yup.string().required(),
+    })
 
 
     /*  const handleSubmit = () => {
@@ -49,10 +61,18 @@ export const ActivityForm = observer(() => {
 
     return (
         <Segment clearing>
-            <Formik initialValues={activity} onSubmit={data => console.log(data)}>
+            <Formik
+                initialValues={activity}
+                validationSchema={validationSchema}
+                onSubmit={data => console.log(data)}
+            >
                 {({ handleSubmit }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <Field placeholder='Title' name='title' />
+                        <FormField>
+                            <Field placeholder='Title' name='title' />
+                            <ErrorMessage name='title' render={error => <Label basic color='red' content={error} />} />
+                        </FormField>
+                       
                         <Field placeholder='Description' name='description' />
                         <Field placeholder='Category' name='category' />
                         <Field type='date' placeholder='Date' name='date' />
