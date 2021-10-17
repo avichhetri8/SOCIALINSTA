@@ -1,33 +1,33 @@
 ﻿import React, { useState } from 'react';
 import { Button, Header, Segment } from "semantic-ui-react";
 import axios from 'axios';
+import { ValidationErrors } from './ValidationErrors';
 
 export const TestError = () => {
-    const baseUrl = '/api/'
     const [errors, setErrors] = useState(null);
 
     function handleNotFound() {
-        axios.get(baseUrl + 'buggy/not-found').catch(err => console.log(err.response));
+        axios.get('buggy/not-found').catch(err => console.log(err.response));
     }
 
     function handleBadRequest() {
-        axios.get(baseUrl + 'buggy/bad-request').catch(err => console.log(err.response));
+        axios.get('buggy/bad-request').catch(err => console.log(err.response));
     }
 
     function handleServerError() {
-        axios.get(baseUrl + 'buggy/server-error').catch(err => console.log(err.response));
+        axios.get('buggy/server-error').catch(err => console.log(err.response));
     }
 
     function handleUnauthorised() {
-        axios.get(baseUrl + 'buggy/unauthorised').catch(err => console.log(err.response));
+        axios.get('buggy/unauthorised').catch(err => console.log(err.response));
     }
 
     function handleBadGuid() {
-        axios.get(baseUrl + 'activities/notaguid').catch(err => console.log(err));
+        axios.get('activities/notaguid').catch(err => console.log(err));
     }
 
     function handleValidationError() {
-        axios.post(baseUrl + 'activities', {}).catch(err => setErrors(err));
+        axios.post('activities', {}).catch(err => setErrors(err));
     }
 
     return (
@@ -44,7 +44,7 @@ export const TestError = () => {
                 </Button.Group>
             </Segment>
             {errors &&
-                console.log(errors)
+                <ValidationErrors errors={errors}/>
             }
         </>
     )
