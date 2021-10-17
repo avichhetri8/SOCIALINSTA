@@ -8,6 +8,7 @@ import { Loading } from '../../../app/layout/Loading';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput } from '../../../app/common/form/MyTextInput';
+import { MyTextArea } from '../../../app/common/form/MyTextArea';
 
 export const ActivityForm = observer(() => {
     const history = useHistory();
@@ -68,30 +69,15 @@ export const ActivityForm = observer(() => {
             >
                 {({ handleSubmit }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <FormField>
-                            <Field placeholder='Title' name='title' />
-                            <ErrorMessage name='title' render={error => <Label basic color='red' content={error} />} />
-                        </FormField>
 
-                        <FormField>
-                            <Field placeholder='Description' name='description' />
-                            <ErrorMessage name='description' render={error => <Label basic color='red' content={error} />} />
-                        </FormField>
-                        <FormField>
-                            <Field placeholder='Category' name='category' />
-                            <ErrorMessage name='category' render={error => <Label basic color='red' content={error} />} /> </FormField>
-                        <FormField >
-                            <Field type='date' placeholder='Date' name='date' />
-                            <ErrorMessage name='date' render={error => <Label basic color='red' content={error} />} />
-                        </FormField>
-                        <FormField>
-                            <Field placeholder='City' name='city' />
-                            <ErrorMessage name='city' render={error => <Label basic color='red' content={error} />} />
-                        </FormField>
-                        <FormField>
-                            <Field placeholder='Venue' name='venue' />
-                            <ErrorMessage name='venue' render={error => <Label basic color='red' content={error} />} />
-                        </FormField>
+                        <MyTextInput placeholder='Title' name='title' />
+
+
+                        <MyTextArea placeholder='Description' rows={3} name='description' />
+                        <MyTextInput placeholder='Category' name='category' />
+                        <MyTextInput placeholder='Date' name='date' />
+                        <MyTextInput placeholder='City' name='city' />
+                        <MyTextInput placeholder='Venue' name='venue' />
                         <Button loading={loading} floated='right' positive type='submit' content='Submit' />
 
                         <Button loading={loading} as={Link} to='/activities' floated='right' type='button' content='Cancel' />
