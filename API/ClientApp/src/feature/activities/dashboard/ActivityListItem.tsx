@@ -2,6 +2,7 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
+import { format } from 'date-fns';
 import { IActivity } from '../../../app/models/Activity';
 import { useStore } from '../../../app/stores/store';
 
@@ -37,7 +38,7 @@ export const ActivityListItem = observer(({ activity }: Props) => {
                 </Segment>
                 <Segment>
                     <span>
-                        <Icon name='clock' /> {activity.date}
+                        <Icon name='clock' /> {format(activity.date, 'dd MMM yyyy h:mm aa')}
                         <Icon name='marker' /> {activity.venue}
                     </span>
                 </Segment>

@@ -9,6 +9,7 @@ import 'react-calendar/dist/Calendar.css'
 import '../src/app/layout/Styles.css'
 import { createBrowserHistory } from 'history';
 import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-datepicker/dist/react-datepicker.min.css'
 
 export const history = createBrowserHistory();
 
