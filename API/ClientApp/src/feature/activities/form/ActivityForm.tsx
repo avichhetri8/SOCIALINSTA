@@ -46,7 +46,7 @@ export const ActivityForm = observer(() => {
     })
 
 
-    /*  const handleSubmit = () => {
+    const handleFormSubmit = (activity : IActivity) => {
           if (activity.id.length === 0) {
               let newActivity = {
                   ...activity,
@@ -57,7 +57,7 @@ export const ActivityForm = observer(() => {
               updateActivity(activity).then(() => history.push(`/activities/${activity.id}`))
           }
       }
-  
+  /*
       const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
           const { name, value } = event.target;
           setActivity({ ...activity, [name]: value })
@@ -72,7 +72,7 @@ export const ActivityForm = observer(() => {
                 validationSchema={validationSchema}
                 enableReinitialize
                 initialValues={activity}
-                onSubmit={values => console.log(values)}
+                onSubmit={values => handleFormSubmit(values)}
             >
                 {({ handleSubmit, isSubmitting, dirty, isValid }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
