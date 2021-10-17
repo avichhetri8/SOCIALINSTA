@@ -7,6 +7,7 @@ import { Route, useLocation } from 'react-router-dom';
 import { HomePage } from '../../feature/home/HomePage';
 import { ActivityForm } from '../../feature/activities/form/ActivityForm';
 import { ActivityDetail } from '../../feature/activities/details/ActivityDetail';
+import { TestError } from '../../feature/error/TestError';
 
 
 const App = () => {
@@ -25,7 +26,7 @@ const App = () => {
                             <Route exact path="/activities/" component={ActivityDashboard} />
                             <Route path="/activities/:id" component={ActivityDetail} />
                             <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
-
+                            <Route path="/errors" component={TestError} />
                         </Container>
                     </>
                 )}

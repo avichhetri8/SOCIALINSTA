@@ -18,6 +18,9 @@ export const NavBar = observer(() => {
                 <Menu.Item >
                     <Button positive content='Create Activity' as={NavLink} to="/createactivity" />
                 </Menu.Item>
+
+                <Menu.Item as={NavLink} to="/error" name='Error'>
+                </Menu.Item>
             </Container>
         </Menu>
     )
