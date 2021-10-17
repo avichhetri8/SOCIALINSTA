@@ -72,12 +72,26 @@ export const ActivityForm = observer(() => {
                             <Field placeholder='Title' name='title' />
                             <ErrorMessage name='title' render={error => <Label basic color='red' content={error} />} />
                         </FormField>
-                       
-                        <Field placeholder='Description' name='description' />
-                        <Field placeholder='Category' name='category' />
-                        <Field type='date' placeholder='Date' name='date' />
-                        <Field placeholder='City' name='city' />
-                        <Field placeholder='Venue' name='venue' />
+
+                        <FormField>
+                            <Field placeholder='Description' name='description' />
+                            <ErrorMessage name='description' render={error => <Label basic color='red' content={error} />} />
+                        </FormField>
+                        <FormField>
+                            <Field placeholder='Category' name='category' />
+                            <ErrorMessage name='category' render={error => <Label basic color='red' content={error} />} /> </FormField>
+                        <FormField >
+                            <Field type='date' placeholder='Date' name='date' />
+                            <ErrorMessage name='date' render={error => <Label basic color='red' content={error} />} />
+                        </FormField>
+                        <FormField>
+                            <Field placeholder='City' name='city' />
+                            <ErrorMessage name='city' render={error => <Label basic color='red' content={error} />} />
+                        </FormField>
+                        <FormField>
+                            <Field placeholder='Venue' name='venue' />
+                            <ErrorMessage name='venue' render={error => <Label basic color='red' content={error} />} />
+                        </FormField>
                         <Button loading={loading} floated='right' positive type='submit' content='Submit' />
 
                         <Button loading={loading} as={Link} to='/activities' floated='right' type='button' content='Cancel' />
